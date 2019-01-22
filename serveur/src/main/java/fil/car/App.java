@@ -31,7 +31,7 @@ public class App
                         new InputStreamReader(as.getInputStream()));
                 DataOutputStream out = new DataOutputStream(as.getOutputStream());
                 String msg = in.readLine();
-                int c1 = 
+                int c1 =
 
 
 
