@@ -31,15 +31,15 @@ public class App
                         new InputStreamReader(as.getInputStream()));
                 DataOutputStream out = new DataOutputStream(as.getOutputStream());
                 String msg = in.readLine();
-                int c1 =
+//                int c1 =
 
 
 
                 //on reçoit les trois réponses
                 //on calcule
-                String resp = msg.calcule();
+//                String resp = msg.calcule();
 
-                out.writeBytes(resp);
+//                out.writeBytes(resp);
                 System.out.println("Response has been sent.");
             }
         } catch (IOException ex)
