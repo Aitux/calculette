@@ -19,9 +19,6 @@ public class ParserServer {
 
     public static Operation parse(String str) throws NumberFormatException, OperatorInvalidException,ArrayIndexOutOfBoundsException {
         String[] calcul = str.split(" ");
-        for (String s : calcul) {
-            System.out.println(s);
-        }
         if ((calcul.length <= 1))
             throw new ArrayIndexOutOfBoundsException();
 

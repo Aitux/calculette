@@ -18,24 +18,23 @@ public class App {
         Socket as = null;
         boolean flag = true;
         try {
-            while(flag) {
+            while (flag) {
                 as = new Socket(InetAddress.getLocalHost(), 4000);
                 System.out.println("Client: Connection established");
                 DataOutputStream out = new DataOutputStream(as.getOutputStream());
                 BufferedReader bfr = new BufferedReader(
                         new InputStreamReader(as.getInputStream()));
-                String sentence = "connected";
-                out.writeBytes(sentence);
-                System.out.println("Message sent");
                 String response = bfr.readLine();
-                System.out.println(response);
+                System.out.println("CLIENT: " + response);
                 Scanner in = new Scanner(System.in);
                 String operation = in.nextLine();
                 out.writeBytes(operation);
+                out.flush();
                 response = bfr.readLine();
-                System.out.println(response);
-                if(response.startsWith("[SUCCESS]"))
+                if (response.startsWith("[SUCCESS]")) {
                     flag = false;
+                }
+                System.out.println(response);
             }
             as.close();
         } catch (UnknownHostException ex) {

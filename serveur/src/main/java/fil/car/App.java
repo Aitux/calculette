@@ -16,22 +16,50 @@ import java.util.List;
 public class App
 {
     List<Character> operateur = new ArrayList<>();
+    int oldRes;
     public static void main(String[] args)
     {
         ServerSocket ps = null;
+        BufferedReader in = null;
+        DataOutputStream out = null;
+        boolean flag = true;
         try
         {
             ps = new ServerSocket(4000);
             while (true)
             {
                 Socket as = ps.accept();
-                System.out.println("Bonjour, je suis votre calculette personnelle \n " +
-                        "Entrez votre premier nombre pour commencer : \n");
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(as.getInputStream()));
-                DataOutputStream out = new DataOutputStream(as.getOutputStream());
-                String msg = in.readLine();
-//                int c1 =
+
+                in = new BufferedReader(new InputStreamReader(as.getInputStream()));
+                out = new DataOutputStream(as.getOutputStream());
+                out.writeBytes("Bonjour, je suis votre calculette personnelle, " +
+                        "Veuillez m'indiquer le calcul de votre choix en respectant la syntaxe <a +.-.*./ b> les espaces sont importants !\n");
+                out.flush();
+                while(flag){
+                    String msg = in.readLine();
+                    System.out.println(msg);
+                    try {
+                        flag = false;
+                        Operation p = ParserServer.parse(msg);
+                        out.writeBytes("[SUCCESS] " + p.calcul());
+                    } catch (OperatorInvalidException e) {
+                        e.printStackTrace();
+                        out.writeBytes("Operateur invalide");
+                        out.flush();
+                        flag = true;
+                    }catch(NumberFormatException e){
+                        e.printStackTrace();
+                        out.writeBytes("Problème aves le format des nombres (impossible de les parser)");
+                        out.flush();
+                        flag = true;
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        e.printStackTrace();
+                        out.writeBytes("Phrase trop courte (la taille ça compte)");
+                        out.flush();
+                        flag = true;
+                    }
+                }
+
 
 
 
@@ -41,6 +69,7 @@ public class App
 
 //                out.writeBytes(resp);
                 System.out.println("Response has been sent.");
+                flag=true;
             }
         } catch (IOException ex)
         {
