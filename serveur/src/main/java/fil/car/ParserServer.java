@@ -3,9 +3,16 @@ package fil.car;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class Parser
+ */
+
 public class ParserServer {
 
-
+    /**
+     * For test
+     * @param args
+     */
     public static void main(String[] args) {
         // La seule chose importante est maintenant de vérifier que le string reçu par le parser respecte la syntaxe <a +./.*.- b> les espaces sont importants.
         String s = "3 + 4";
@@ -17,6 +24,14 @@ public class ParserServer {
         }
     }
 
+    /**
+     * 
+     * @param str (String)
+     * @return
+     * @throws NumberFormatException
+     * @throws OperatorInvalidException
+     * @throws ArrayIndexOutOfBoundsException
+     */
     public static Operation parse(String str) throws NumberFormatException, OperatorInvalidException,ArrayIndexOutOfBoundsException {
         String[] calcul = str.split(" ");
         if ((calcul.length <= 1))

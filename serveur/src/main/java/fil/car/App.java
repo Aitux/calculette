@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Server
+ * Class Server
  */
 public class App {
     public static int oldRes = 0;
-    List<Character> operateur = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -62,57 +61,11 @@ public class App {
                     }
                 }
 
-
-                //on reçoit les trois réponses
-                //on calcule
-//                String resp = msg.calcule();
-
-//                out.writeBytes(resp);
                 System.out.println("Response has been sent.");
                 flag = true;
             }
         } catch (IOException ex) {
             System.exit(-1);
-        }
-    }
-
-    public void verfication() {
-
-    }
-
-    /**
-     * Calcule l'opération proposée
-     *
-     * @param c1  premier chiffre
-     * @param ope l'opérateur
-     * @param c2  second chiffre
-     * @return le résultat du calcul entre les deux chiffres
-     */
-    public String calcule(int c1, char ope, int c2) {
-        operateur.add('*');
-        operateur.add('/');
-        operateur.add('-');
-        operateur.add('+');
-        int res = 0;
-        if (operateur.contains(ope)) {
-            switch (ope) {
-                case '*':
-                    res = c1 * c2;
-                    break;
-                case '+':
-                    res = c1 + c2;
-                    break;
-                case '-':
-                    res = c1 - c2;
-                    break;
-                case '/':
-                    res = c1 / c2;
-                    break;
-            }
-            return c1 + ope + c2 + " = " + res;
-        } else {
-            return "Erreur, votre opérateur n'est pas correct. \n " +
-                    "Opérateurs disponible : +,/,*,-";
         }
     }
 }
