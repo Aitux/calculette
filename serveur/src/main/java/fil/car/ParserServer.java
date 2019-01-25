@@ -25,7 +25,7 @@ public class ParserServer {
     }
 
     /**
-     * 
+     *
      * @param str (String)
      * @return
      * @throws NumberFormatException
@@ -34,6 +34,7 @@ public class ParserServer {
      */
     public static Operation parse(String str) throws NumberFormatException, OperatorInvalidException,ArrayIndexOutOfBoundsException {
         String[] calcul = str.split(" ");
+        //if the user sent one char, throws exception
         if ((calcul.length <= 1))
             throw new ArrayIndexOutOfBoundsException();
 
@@ -43,6 +44,7 @@ public class ParserServer {
         operateurs.add("-");
         operateurs.add("+");
         Operation res = new Operation();
+        //if it's only operator and integer
         if(operateurs.contains(calcul[0])){
             int i = App.oldRes;
             res.setLeftOperand(i);
@@ -52,6 +54,7 @@ public class ParserServer {
             }catch (NumberFormatException e){
                 throw new NumberFormatException();
             }
+        // if it's an complete operation
         }else {
             try {
                 res.setLeftOperand(Integer.parseInt(calcul[0]));

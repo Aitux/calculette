@@ -17,7 +17,6 @@ public class App {
     public static void main(String[] args) {
         Socket as = null;
         try {
-
                 as = new Socket(InetAddress.getLocalHost(), 4000);
                 System.out.println("Client: Connection established.");
                 DataOutputStream out = new DataOutputStream(as.getOutputStream());
@@ -28,6 +27,7 @@ public class App {
                 Scanner in = new Scanner(System.in);
             while (true) {
                 String operation = in.nextLine();
+                // if it's a point, sent null (client left)
                 if (operation.equals(".")) {
                     return;
                 }
@@ -42,6 +42,7 @@ public class App {
             System.exit(-1);
         }finally {
             try {
+                //
                 as.close();
             } catch (IOException e) {
                 e.printStackTrace();
