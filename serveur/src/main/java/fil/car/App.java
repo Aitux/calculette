@@ -29,7 +29,7 @@ public class App {
                 in = new BufferedReader(new InputStreamReader(as.getInputStream()));
                 out = new DataOutputStream(as.getOutputStream());
                 out.writeBytes("Bonjour, je suis votre calculette personnelle, " +
-                        "Veuillez m'indiquer le calcul de votre choix en respectant la syntaxe <a +.-.*./ b> les espaces sont importants !\n");
+                        "Veuillez m'indiquer le calcul de votre choix en respectant la syntaxe <a +.-.*./ b> les espaces sont importants ! Pour vous déconnecter écrivez . sur une ligne simple\n");
                 out.flush();
                 while (flag) {
                     String msg = in.readLine();
@@ -42,17 +42,17 @@ public class App {
 
                     } catch (OperatorInvalidException e) {
                         e.printStackTrace();
-                        out.writeBytes("Operateur invalide");
+                        out.writeBytes("Operateur invalide\n");
                         out.flush();
                         flag = true;
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
-                        out.writeBytes("Problème aves le format des nombres (impossible de les parser)");
+                        out.writeBytes("Problème aves le format des nombres (impossible de les parser)\n");
                         out.flush();
                         flag = true;
                     } catch (ArrayIndexOutOfBoundsException e) {
                         e.printStackTrace();
-                        out.writeBytes("Phrase trop courte (la taille ça compte)");
+                        out.writeBytes("Phrase trop courte (la taille ça compte)\n");
                         out.flush();
                         flag = true;
                     } catch (NullPointerException e) {
