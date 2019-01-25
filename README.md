@@ -1,5 +1,7 @@
 # calculette
 Par Vandeputte Simon et Pruvost Océane
+simon.vandeputte.etu@univ-lille.fr
+oceane.pruvost.etu@univ-lille.fr
 
 # Objectif du TP
 
