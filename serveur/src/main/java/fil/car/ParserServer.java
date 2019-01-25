@@ -27,20 +27,29 @@ public class ParserServer {
         operateurs.add("/");
         operateurs.add("-");
         operateurs.add("+");
-        int i = 0;
         Operation res = new Operation();
-        try {
-            res.setLeftOperand(Integer.parseInt(calcul[0]));
-            res.setRightOperand(Integer.parseInt(calcul[2]));
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException();
+        if(operateurs.contains(calcul[0])){
+            int i = App.oldRes;
+            res.setLeftOperand(i);
+            res.setOperator(calcul[0].charAt(0));
+            try {
+                res.setRightOperand(Integer.parseInt(calcul[1]));
+            }catch (NumberFormatException e){
+                throw new NumberFormatException();
+            }
+        }else {
+            try {
+                res.setLeftOperand(Integer.parseInt(calcul[0]));
+                res.setRightOperand(Integer.parseInt(calcul[2]));
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException();
+            }
+
+            if (operateurs.contains(calcul[1]))
+                res.setOperator(calcul[1].charAt(0));
+            else
+                throw new OperatorInvalidException();
         }
-
-        if(operateurs.contains(calcul[1]))
-            res.setOperator(calcul[1].charAt(0));
-        else
-            throw new OperatorInvalidException();
-
         return res;
     }
 }

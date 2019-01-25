@@ -16,9 +16,10 @@ import java.util.List;
 public class App
 {
     List<Character> operateur = new ArrayList<>();
-    int oldRes;
+    public static int oldRes = 0;
     public static void main(String[] args)
     {
+
         ServerSocket ps = null;
         BufferedReader in = null;
         DataOutputStream out = null;
@@ -41,7 +42,9 @@ public class App
                     try {
                         flag = false;
                         Operation p = ParserServer.parse(msg);
-                        out.writeBytes("[SUCCESS] " + p.calcul());
+                        out.writeBytes("[SUCCESS] " + p.calcul() + "\n");
+                        oldRes = p.calcul();
+                        System.out.println("oldRes="+oldRes);
                     } catch (OperatorInvalidException e) {
                         e.printStackTrace();
                         out.writeBytes("Operateur invalide");

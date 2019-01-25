@@ -16,11 +16,10 @@ public class App {
 
     public static void main(String[] args) {
         Socket as = null;
-        boolean flag = true;
         try {
-            while (flag) {
+            while (true) {
                 as = new Socket(InetAddress.getLocalHost(), 4000);
-                System.out.println("Client: Connection established");
+                System.out.println("Client: Connection established.");
                 DataOutputStream out = new DataOutputStream(as.getOutputStream());
                 BufferedReader bfr = new BufferedReader(
                         new InputStreamReader(as.getInputStream()));
@@ -28,19 +27,24 @@ public class App {
                 System.out.println("CLIENT: " + response);
                 Scanner in = new Scanner(System.in);
                 String operation = in.nextLine();
-                out.writeBytes(operation);
+                if (operation.equals(".")) {
+                    return;
+                }
+                System.out.println(operation);
+                out.writeBytes(operation + "\n");
                 out.flush();
                 response = bfr.readLine();
-                if (response.startsWith("[SUCCESS]")) {
-                    flag = false;
-                }
+
                 System.out.println(response);
             }
-            as.close();
-        } catch (UnknownHostException ex) {
-            System.exit(-1);
         } catch (IOException ex) {
             System.exit(-1);
+        }finally {
+            try {
+                as.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
