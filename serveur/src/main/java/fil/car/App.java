@@ -11,24 +11,20 @@ import java.util.List;
 
 /**
  * Server
- *
  */
-public class App
-{
-    List<Character> operateur = new ArrayList<>();
+public class App {
     public static int oldRes = 0;
-    public static void main(String[] args)
-    {
+    List<Character> operateur = new ArrayList<>();
+
+    public static void main(String[] args) {
 
         ServerSocket ps = null;
         BufferedReader in = null;
         DataOutputStream out = null;
         boolean flag = true;
-        try
-        {
+        try {
             ps = new ServerSocket(4000);
-            while (true)
-            {
+            while (true) {
                 Socket as = ps.accept();
 
                 in = new BufferedReader(new InputStreamReader(as.getInputStream()));
@@ -36,34 +32,35 @@ public class App
                 out.writeBytes("Bonjour, je suis votre calculette personnelle, " +
                         "Veuillez m'indiquer le calcul de votre choix en respectant la syntaxe <a +.-.*./ b> les espaces sont importants !\n");
                 out.flush();
-                while(flag){
+                while (flag) {
                     String msg = in.readLine();
                     System.out.println(msg);
                     try {
-                        flag = false;
                         Operation p = ParserServer.parse(msg);
                         out.writeBytes("[SUCCESS] " + p.calcul() + "\n");
                         oldRes = p.calcul();
-                        System.out.println("oldRes="+oldRes);
+                        System.out.println("oldRes=" + oldRes);
+
                     } catch (OperatorInvalidException e) {
                         e.printStackTrace();
                         out.writeBytes("Operateur invalide");
                         out.flush();
                         flag = true;
-                    }catch(NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         e.printStackTrace();
                         out.writeBytes("Problème aves le format des nombres (impossible de les parser)");
                         out.flush();
                         flag = true;
-                    }catch (ArrayIndexOutOfBoundsException e){
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         e.printStackTrace();
                         out.writeBytes("Phrase trop courte (la taille ça compte)");
                         out.flush();
                         flag = true;
+                    } catch (NullPointerException e) {
+                        flag = false;
+                        System.out.println("Client Disconnected");
                     }
                 }
-
-
 
 
                 //on reçoit les trois réponses
@@ -72,50 +69,48 @@ public class App
 
 //                out.writeBytes(resp);
                 System.out.println("Response has been sent.");
-                flag=true;
+                flag = true;
             }
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             System.exit(-1);
         }
     }
 
-    public void verfication(){
+    public void verfication() {
 
     }
 
     /**
      * Calcule l'opération proposée
      *
-     * @param c1 premier chiffre
+     * @param c1  premier chiffre
      * @param ope l'opérateur
-     * @param c2 second chiffre
+     * @param c2  second chiffre
      * @return le résultat du calcul entre les deux chiffres
      */
-    public String calcule(int c1, char ope, int c2){
+    public String calcule(int c1, char ope, int c2) {
         operateur.add('*');
         operateur.add('/');
         operateur.add('-');
         operateur.add('+');
         int res = 0;
-        if (operateur.contains(ope)){
-            switch (ope){
-            case '*':
-            res = c1 * c2;
-             break;
-            case '+':
-                res = c1 + c2;
-                break;
-            case '-':
-                res = c1 - c2;
-                break;
-            case '/':
-                res = c1 / c2;
-                break;
+        if (operateur.contains(ope)) {
+            switch (ope) {
+                case '*':
+                    res = c1 * c2;
+                    break;
+                case '+':
+                    res = c1 + c2;
+                    break;
+                case '-':
+                    res = c1 - c2;
+                    break;
+                case '/':
+                    res = c1 / c2;
+                    break;
             }
             return c1 + ope + c2 + " = " + res;
-        }
-        else{
+        } else {
             return "Erreur, votre opérateur n'est pas correct. \n " +
                     "Opérateurs disponible : +,/,*,-";
         }

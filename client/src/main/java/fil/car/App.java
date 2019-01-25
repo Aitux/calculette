@@ -17,7 +17,7 @@ public class App {
     public static void main(String[] args) {
         Socket as = null;
         try {
-            while (true) {
+
                 as = new Socket(InetAddress.getLocalHost(), 4000);
                 System.out.println("Client: Connection established.");
                 DataOutputStream out = new DataOutputStream(as.getOutputStream());
@@ -26,6 +26,7 @@ public class App {
                 String response = bfr.readLine();
                 System.out.println("CLIENT: " + response);
                 Scanner in = new Scanner(System.in);
+            while (true) {
                 String operation = in.nextLine();
                 if (operation.equals(".")) {
                     return;
